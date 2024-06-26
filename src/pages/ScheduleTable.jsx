@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Table, Thead, Tbody, Tr, Th, Td, Heading, Select, Button } from '@chakra-ui/react';
+import { Container, Table, Thead, Tbody, Tr, Th, Td, Heading, Select, Button, Box, Alert, AlertIcon } from '@chakra-ui/react';
 import axios from 'axios';
 
 const ScheduleTable = () => {
@@ -9,25 +9,35 @@ const ScheduleTable = () => {
   const [vehicles, setVehicles] = useState([]);
   const [schedule, setSchedule] = useState([]);
   const [newEntry, setNewEntry] = useState({ department: '', worker: '', object: '', vehicle: '' });
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     // Fetch data for dropdowns
     const fetchData = async () => {
-      const departmentsData = await axios.get('/api/departments');
-      const workersData = await axios.get('/api/workers');
-      const objectsData = await axios.get('/api/objects');
-      const vehiclesData = await axios.get('/api/vehicles');
+      try {
+        const departmentsData = await axios.get('/api/departments');
+        const workersData = await axios.get('/api/workers');
+        const objectsData = await axios.get('/api/objects');
+        const vehiclesData = await axios.get('/api/vehicles');
 
-      setDepartments(departmentsData.data);
-      setWorkers(workersData.data);
-      setObjects(objectsData.data);
-      setVehicles(vehiclesData.data);
+        setDepartments(departmentsData.data);
+        setWorkers(workersData.data);
+        setObjects(objectsData.data);
+        setVehicles(vehiclesData.data);
+      } catch (err) {
+        setError('Failed to fetch data');
+      }
     };
 
     fetchData();
   }, []);
 
   const handleAddEntry = () => {
+    if (!newEntry.department || !newEntry.worker || !newEntry.object || !newEntry.vehicle) {
+      setError('All fields are required');
+      return;
+    }
+    setError(null);
     setSchedule([...schedule, newEntry]);
     setNewEntry({ department: '', worker: '', object: '', vehicle: '' });
   };
@@ -35,6 +45,12 @@ const ScheduleTable = () => {
   return (
     <Container maxW="container.md" py={10}>
       <Heading as="h1" size="2xl" mb={6}>Daily Schedule</Heading>
+      {error && (
+        <Alert status="error" mb={4}>
+          <AlertIcon />
+          {error}
+        </Alert>
+      )}
       <Table variant="simple">
         <Thead>
           <Tr>
