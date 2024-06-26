@@ -21,6 +21,9 @@ const Index = () => {
         <Button as={Link} to="/vehicles" colorScheme="teal" size="lg">
           Manage Vehicles
         </Button>
+        <Button as={Link} to="/schedule" colorScheme="teal" size="lg">
+          View Schedule
+        </Button>
       </VStack>
     </Container>
   );

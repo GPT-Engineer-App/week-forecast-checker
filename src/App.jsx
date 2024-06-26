@@ -5,6 +5,7 @@ import DepartmentForm from "./pages/DepartmentForm.jsx";
 import WorkerForm from "./pages/WorkerForm.jsx";
 import ObjectForm from "./pages/ObjectForm.jsx";
 import VehicleForm from "./pages/VehicleForm.jsx";
+import ScheduleTable from "./pages/ScheduleTable.jsx";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/workers" element={<WorkerForm />} />
         <Route path="/objects" element={<ObjectForm />} />
         <Route path="/vehicles" element={<VehicleForm />} />
+        <Route path="/schedule" element={<ScheduleTable />} />
       </Routes>
     </Router>
   );
