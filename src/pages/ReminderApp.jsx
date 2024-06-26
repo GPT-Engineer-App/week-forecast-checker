@@ -8,6 +8,7 @@ const ReminderApp = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [dueDate, setDueDate] = useState('');
+  const [creator, setCreator] = useState('');
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -23,29 +24,31 @@ const ReminderApp = () => {
   }, [reminders, tasks]);
 
   const handleAddReminder = () => {
-    if (!title || !description || !dueDate) {
+    if (!title || !description || !dueDate || !creator) {
       setError('All fields are required');
       return;
     }
     setError(null);
-    const newReminder = { id: uuidv4(), title, description, dueDate };
+    const newReminder = { id: uuidv4(), title, description, dueDate, creator };
     setReminders([...reminders, newReminder]);
     setTitle('');
     setDescription('');
     setDueDate('');
+    setCreator('');
   };
 
   const handleAddTask = () => {
-    if (!title || !description || !dueDate) {
+    if (!title || !description || !dueDate || !creator) {
       setError('All fields are required');
       return;
     }
     setError(null);
-    const newTask = { id: uuidv4(), title, description, dueDate };
+    const newTask = { id: uuidv4(), title, description, dueDate, creator };
     setTasks([...tasks, newTask]);
     setTitle('');
     setDescription('');
     setDueDate('');
+    setCreator('');
   };
 
   const handleDeleteReminder = (id) => {
@@ -61,6 +64,7 @@ const ReminderApp = () => {
     setTitle(reminder.title);
     setDescription(reminder.description);
     setDueDate(reminder.dueDate);
+    setCreator(reminder.creator);
     handleDeleteReminder(id);
   };
 
@@ -69,6 +73,7 @@ const ReminderApp = () => {
     setTitle(task.title);
     setDescription(task.description);
     setDueDate(task.dueDate);
+    setCreator(task.creator);
     handleDeleteTask(id);
   };
 
@@ -94,6 +99,7 @@ const ReminderApp = () => {
                   <Input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
                   <Textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
                   <Input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
+                  <Input placeholder="Creator" value={creator} onChange={(e) => setCreator(e.target.value)} />
                   <Button colorScheme="teal" onClick={handleAddReminder}>Add Reminder</Button>
                 </VStack>
               </Box>
@@ -109,6 +115,7 @@ const ReminderApp = () => {
                           <Text fontSize="xl">{reminder.title}</Text>
                           <Text>{reminder.description}</Text>
                           <Text>Due Date: {reminder.dueDate}</Text>
+                          <Text>Creator: {reminder.creator}</Text>
                         </VStack>
                         <HStack>
                           <Button colorScheme="blue" onClick={() => handleEditReminder(reminder.id)}>Edit</Button>
@@ -126,6 +133,7 @@ const ReminderApp = () => {
                   <Input placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)} />
                   <Textarea placeholder="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
                   <Input type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
+                  <Input placeholder="Creator" value={creator} onChange={(e) => setCreator(e.target.value)} />
                   <Button colorScheme="teal" onClick={handleAddTask}>Add Task</Button>
                 </VStack>
               </Box>
@@ -141,6 +149,7 @@ const ReminderApp = () => {
                           <Text fontSize="xl">{task.title}</Text>
                           <Text>{task.description}</Text>
                           <Text>Due Date: {task.dueDate}</Text>
+                          <Text>Creator: {task.creator}</Text>
                         </VStack>
                         <HStack>
                           <Button colorScheme="blue" onClick={() => handleEditTask(task.id)}>Edit</Button>
