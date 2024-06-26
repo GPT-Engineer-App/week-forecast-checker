@@ -5,18 +5,18 @@ const VehicleForm = () => {
   const [vehicles, setVehicles] = useState([]);
   const [make, setMake] = useState('');
   const [model, setModel] = useState('');
-  const [year, setYear] = useState('');
+  const [registrationNumber, setRegistrationNumber] = useState('');
 
   const handleAddVehicle = () => {
-    if (!make || !model || !year) {
+    if (!make || !model || !registrationNumber) {
       alert('All fields are required');
       return;
     }
-    const newVehicle = { id: Date.now(), make, model, year };
+    const newVehicle = { id: Date.now(), make, model, registrationNumber };
     setVehicles([...vehicles, newVehicle]);
     setMake('');
     setModel('');
-    setYear('');
+    setRegistrationNumber('');
   };
 
   return (
@@ -27,7 +27,7 @@ const VehicleForm = () => {
           <VStack spacing={4}>
             <Input placeholder="Make" value={make} onChange={(e) => setMake(e.target.value)} />
             <Input placeholder="Model" value={model} onChange={(e) => setModel(e.target.value)} />
-            <Input placeholder="Year" value={year} onChange={(e) => setYear(e.target.value)} />
+            <Input placeholder="Registration Number" value={registrationNumber} onChange={(e) => setRegistrationNumber(e.target.value)} />
             <Button colorScheme="teal" onClick={handleAddVehicle}>Add Vehicle</Button>
           </VStack>
         </Box>
@@ -39,7 +39,7 @@ const VehicleForm = () => {
             vehicles.map(vehicle => (
               <Box key={vehicle.id} p={5} shadow="md" borderWidth="1px" borderRadius="md" mb={4}>
                 <Text fontSize="xl">{vehicle.make} {vehicle.model}</Text>
-                <Text>Year: {vehicle.year}</Text>
+                <Text>Registration Number: {vehicle.registrationNumber}</Text>
               </Box>
             ))
           )}
